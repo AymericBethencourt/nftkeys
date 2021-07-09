@@ -1,25 +1,12 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Link as RouterLink,
   Switch,
   Route,
 } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Link,
-  IconButton,
-  Container,
-  Chip,
-} from "@material-ui/core";
-import { SpeedDial, SpeedDialIcon, SpeedDialAction } from "@material-ui/lab";
+import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import MenuIcon from "@material-ui/icons/Menu";
-import AddIcon from "@material-ui/icons/Add";
-import LocalAtmIcon from "@material-ui/icons/LocalAtm";
-import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import * as api from "./api";
 import { NodeInfoContext, nodeInfoContextDefaultValue } from "./context";
 
@@ -27,9 +14,8 @@ import HomePage from "./components/HomePage";
 import TransactionsPage from "./components/TransactionsPage";
 import Header from "./components/Header";
 import AccountPage from "./components/AccountPage";
-import CreateAccountDialog from "./components/dialogs/CreateAccountDialog";
-import TransferFundsDialog from "./components/dialogs/TransferFundsDialog";
-import CreateNFTTokenDialog from "./components/dialogs/CreateNFTTokenDialog";
+
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   palette: {
@@ -57,8 +43,6 @@ function App() {
   const [nodeInfoState, updateNodeInfoState] = useState(
     nodeInfoContextDefaultValue
   );
-  const [openSpeedDial, setOpenSpeedDial] = useState(false);
-  const [openDialog, setOpenDialog] = useState(null);
 
   const updateHeight = async () => {
     const info = await api.fetchNodeInfo();
@@ -83,60 +67,17 @@ function App() {
     fetchData();
   }, []);
 
-  const handleSpeedDialClose = () => {
-    setOpenSpeedDial(false);
-  };
-
-  const handleSpeedDialOpen = () => {
-    setOpenSpeedDial(true);
-  };
+  const darkTheme = createMuiTheme({
+    palette: {
+      type: "dark",
+    },
+  });
 
   return (
-    <Fragment>
+    <ThemeProvider theme={darkTheme}>
       <NodeInfoContext.Provider value={nodeInfoState}>
         <Router>
           <Header />
-
-          <SpeedDial
-            ariaLabel="SpeedDial example"
-            color="secondary"
-            className={classes.speedDial}
-            icon={<SpeedDialIcon />}
-            onClose={handleSpeedDialClose}
-            onOpen={handleSpeedDialOpen}
-            open={openSpeedDial}
-            direction={"up"}
-          >
-            <SpeedDialAction
-              key={"Create NFT"}
-              icon={<AddPhotoAlternateIcon />}
-              tooltipTitle={"Create NFT"}
-              onClick={() => {
-                setOpenSpeedDial(false);
-                setOpenDialog("CreateNFTTokenDialog");
-              }}
-            />
-
-            <SpeedDialAction
-              key={"Transfer"}
-              icon={<LocalAtmIcon />}
-              tooltipTitle={"Transfer Funds"}
-              onClick={() => {
-                setOpenSpeedDial(false);
-                setOpenDialog("TransferFundsDialog");
-              }}
-            />
-
-            <SpeedDialAction
-              key={"Create Account"}
-              icon={<AddIcon />}
-              tooltipTitle={"Create Account"}
-              onClick={() => {
-                setOpenSpeedDial(false);
-                setOpenDialog("CreateAccountDialog");
-              }}
-            />
-          </SpeedDial>
 
           <Container className={classes.contentContainer}>
             <Switch>
@@ -148,30 +89,9 @@ function App() {
               <Route path="/transactions" component={TransactionsPage} />
             </Switch>
           </Container>
-
-          <CreateNFTTokenDialog
-            open={openDialog === "CreateNFTTokenDialog"}
-            handleClose={() => {
-              setOpenDialog(null);
-            }}
-          />
-
-          <CreateAccountDialog
-            open={openDialog === "CreateAccountDialog"}
-            handleClose={() => {
-              setOpenDialog(null);
-            }}
-          />
-
-          <TransferFundsDialog
-            open={openDialog === "TransferFundsDialog"}
-            handleClose={() => {
-              setOpenDialog(null);
-            }}
-          />
         </Router>
       </NodeInfoContext.Provider>
-    </Fragment>
+    </ThemeProvider>
   );
 }
 

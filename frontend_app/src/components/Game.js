@@ -24,6 +24,9 @@ export default function Game(props) {
             }}
           >
             <img src={props.item.image} />
+            <div>{props.item.name}</div>
+            <div>{`${props.item.value ? props.item.value/100000000 : '--'} LSK`}</div>
+            <div>{`($${props.item.value ? (props.item.value/100000000*2.49).toFixed(2) : '--'})`}</div>
           </GameStyled>
           <PurchaseNFTTokenDialog
             open={openPurchase}
