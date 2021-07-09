@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro'
+import styled from "styled-components/macro";
 
 export const HeaderStyled = styled.div`
   z-index: 1;
@@ -14,4 +14,33 @@ export const HeaderStyled = styled.div`
     width: 240px;
     margin-top: 12px;
   }
-`
+
+  a {
+    line-height: 60px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  div {
+    line-height: 60px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .pretty {
+    margin-top: 10px;
+    text-align: center;
+    height: 36px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    will-change: box-shadow;
+    width: 100%;
+    user-select: none;
+    background: linear-gradient(to right bottom, #ff3b00, #fe7e00);
+    line-height: 36px;
+  }
+`;

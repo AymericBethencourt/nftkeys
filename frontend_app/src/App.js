@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext, useReducer } from "react";
 import {
   BrowserRouter as Router,
   Link as RouterLink,
@@ -9,13 +9,21 @@ import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import * as api from "./api";
 import { NodeInfoContext, nodeInfoContextDefaultValue } from "./context";
-
 import HomePage from "./components/HomePage";
 import TransactionsPage from "./components/TransactionsPage";
 import Header from "./components/Header";
 import AccountPage from "./components/AccountPage";
-
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { reducer } from "./reducer";
+
+export const initialState = {
+  passphrase: "",
+  address: "",
+  setAccount: () => {},
+  removeAccount: () => {},
+};
+
+export const AppContext = createContext(initialState);
 
 const useStyles = makeStyles((theme) => ({
   palette: {
@@ -39,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const classes = useStyles();
   const [nodeInfoState, updateNodeInfoState] = useState(
     nodeInfoContextDefaultValue
@@ -74,24 +83,37 @@ function App() {
   });
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <NodeInfoContext.Provider value={nodeInfoState}>
-        <Router>
-          <Header />
+    <AppContext.Provider
+      value={{
+        passphrase: state.passphrase,
+        address: state.address,
+        setAccount: (passphrase, address) =>
+          dispatch({
+            type: "set-account",
+            payload: { passphrase, address },
+          }),
+        removeAccount: () => dispatch({ type: "remove-account" }),
+      }}
+    >
+      <ThemeProvider theme={darkTheme}>
+        <NodeInfoContext.Provider value={nodeInfoState}>
+          <Router>
+            <Header />
 
-          <Container className={classes.contentContainer}>
-            <Switch>
-              <Route path="/" exact>
-                <HomePage />
-              </Route>
+            <Container className={classes.contentContainer}>
+              <Switch>
+                <Route path="/" exact>
+                  <HomePage />
+                </Route>
 
-              <Route path="/accounts/:address" component={AccountPage} />
-              <Route path="/transactions" component={TransactionsPage} />
-            </Switch>
-          </Container>
-        </Router>
-      </NodeInfoContext.Provider>
-    </ThemeProvider>
+                <Route path="/accounts/:address" component={AccountPage} />
+                <Route path="/transactions" component={TransactionsPage} />
+              </Switch>
+            </Container>
+          </Router>
+        </NodeInfoContext.Provider>
+      </ThemeProvider>
+    </AppContext.Provider>
   );
 }
 

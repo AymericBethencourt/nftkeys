@@ -13,7 +13,7 @@ export default function Header(props) {
       <Link to="/">
         <img alt="NFTKeys" src="/logo.svg" />
       </Link>
-      
+
       <Link to="/transactions">Transactions</Link>
 
       <div
@@ -21,7 +21,7 @@ export default function Header(props) {
           setOpenDialog("CreateNFTTokenDialog");
         }}
       >
-        Create NFT
+        Create Key NFT
       </div>
 
       <div
@@ -33,6 +33,7 @@ export default function Header(props) {
       </div>
 
       <div
+        className="pretty"
         onClick={() => {
           setOpenDialog("CreateAccountDialog");
         }}
