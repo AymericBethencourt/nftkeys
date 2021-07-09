@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { HeaderStyled } from "./Header.style";
 import CreateAccountDialog from "./dialogs/CreateAccountDialog";
 import TransferFundsDialog from "./dialogs/TransferFundsDialog";
 import CreateNFTTokenDialog from "./dialogs/CreateNFTTokenDialog";
+import { AppContext } from "../App";
 
 export default function Header(props) {
   const [openDialog, setOpenDialog] = useState(null);
+  const { passphrase, address, setAccount, removeAccount } =
+    useContext(AppContext);
 
   return (
     <HeaderStyled>
@@ -24,22 +27,20 @@ export default function Header(props) {
         Create Key NFT
       </div>
 
-      <div
-        onClick={() => {
-          setOpenDialog("TransferFundsDialog");
-        }}
-      >
-        Transfer Funds
-      </div>
-
-      <div
-        className="pretty"
-        onClick={() => {
-          setOpenDialog("CreateAccountDialog");
-        }}
-      >
-        Create Account
-      </div>
+      {address ? (
+        <Link to={`/accounts/${address}`}>
+          <div className="pretty">My Account</div>
+        </Link>
+      ) : (
+        <div
+          className="pretty"
+          onClick={() => {
+            setOpenDialog("CreateAccountDialog");
+          }}
+        >
+          Create Account
+        </div>
+      )}
 
       <CreateNFTTokenDialog
         open={openDialog === "CreateNFTTokenDialog"}

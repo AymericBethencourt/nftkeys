@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useState, useEffect } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -12,6 +12,7 @@ import { NodeInfoContext } from "../../context";
 import { purchaseNFTToken } from "../../utils/transactions/purchase_nft_token";
 import * as api from "../../api";
 import { transactions } from "@liskhq/lisk-client";
+import { AppContext } from "../../App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
 export default function PurchaseNFTTokenDialog(props) {
   const nodeInfo = useContext(NodeInfoContext);
   const classes = useStyles();
+  const { passphrase, address, setAccount, removeAccount } =
+  useContext(AppContext);
+
   const currentValue = parseFloat(
     transactions.convertBeddowsToLSK(props.token.value)
   );
@@ -38,6 +42,10 @@ export default function PurchaseNFTTokenDialog(props) {
     fee: "",
     passphrase: "",
   });
+
+  useEffect(() => {
+    setData({...data, passphrase})
+  }, [passphrase])
 
   const handleChange = (event) => {
     event.persist();

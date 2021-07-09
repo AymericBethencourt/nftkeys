@@ -6,7 +6,8 @@ export const HeaderStyled = styled.div`
   height: 60px;
   max-width: 1280px;
   display: grid;
-  grid-template-columns: 238px repeat(5, 1fr);
+  text-align: center;
+  grid-template-columns: 238px repeat(3, 1fr);
   grid-gap: 10px;
   margin: auto;
 

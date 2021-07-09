@@ -20,7 +20,7 @@ function AccountPage() {
     fetchData();
   }, [address]);
 
-  return loaded ? <Account account={account} /> : <Fragment></Fragment>;
+  return (loaded && account) ? <Account account={account} /> : <Fragment>Account not yet loaded or created. Please wait 10s until the initial transaction is confirmed.</Fragment>;
 }
 
 export default AccountPage;

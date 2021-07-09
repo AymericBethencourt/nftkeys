@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Divider, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {Buffer, cryptography, transactions} from "@liskhq/lisk-client";
-import NFTToken from "./NFTToken";
+import { Buffer, cryptography, transactions } from "@liskhq/lisk-client";
+import Game from "./Game";
 import { fetchNFTToken } from "../api";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +33,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Account(props) {
   const [nftTokens, setNftTokens] = useState([]);
   const classes = useStyles();
-  const base32UIAddress = cryptography.getBase32AddressFromAddress(Buffer.from(props.account.address, 'hex'), 'lsk').toString('binary');
+  const base32UIAddress = cryptography
+    .getBase32AddressFromAddress(
+      Buffer.from(props.account.address, "hex"),
+      "lsk"
+    )
+    .toString("binary");
 
   useEffect(() => {
     async function fetchData() {
@@ -63,11 +68,11 @@ export default function Account(props) {
           <dd>{props.account.address}</dd>
         </li>
       </dl>
-      <Typography variant="h6">{"NFTs"}</Typography>
+      <Typography variant="h6">{"My game keys"}</Typography>
       <Grid container spacing={4}>
         {nftTokens.map((item) => (
-          <Grid item md={3}>
-            <NFTToken item={item} key={item.address} minimum={true} />
+          <Grid item md={2}>
+            <Game item={item} key={item.id} showKey />
           </Grid>
         ))}
       </Grid>

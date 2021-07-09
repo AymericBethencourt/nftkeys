@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useState, useEffect } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -15,6 +15,7 @@ import { createNFTToken } from "../../utils/transactions/create_nft_token";
 import * as api from "../../api";
 import { Buckets, PrivateKey } from "@textile/hub";
 import styled from "styled-components/macro";
+import { AppContext } from "../../App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +41,8 @@ export const UploaderLabel = styled.label`
 export default function CreateNFTTokenDialog(props) {
   const nodeInfo = useContext(NodeInfoContext);
   const classes = useStyles();
+  const { passphrase, address, setAccount, removeAccount } =
+  useContext(AppContext);
   const [data, setData] = useState({
     name: "",
     image: "",
@@ -51,6 +54,10 @@ export default function CreateNFTTokenDialog(props) {
   });
   const [isUploading, setIsUploading] = useState(false);
 
+  useEffect(() => {
+    setData({...data, passphrase})
+  }, [passphrase])
+  
   const handleChange = (event) => {
     event.persist();
     setData({ ...data, [event.target.name]: event.target.value });
