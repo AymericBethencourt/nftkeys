@@ -14,7 +14,7 @@ class CreateNFTAsset extends BaseAsset {
   schema = {
     $id: "lisk/nft/create",
     type: "object",
-    required: ["minPurchaseMargin", "initValue", "name"],
+    required: ["minPurchaseMargin", "initValue", "name", "key", "image"],
     properties: {
       minPurchaseMargin: {
         dataType: "uint32",
@@ -28,6 +28,14 @@ class CreateNFTAsset extends BaseAsset {
         dataType: "string",
         fieldNumber: 3,
       },
+      key: {
+        dataType: "string",
+        fieldNumber: 4,
+      },
+      image: {
+        dataType: "string",
+        fieldNumber: 5,
+      },
     },
   };
   validate({asset}) {
@@ -36,6 +44,7 @@ class CreateNFTAsset extends BaseAsset {
     } else if (asset.minPurchaseMargin < 0 || asset.minPurchaseMargin > 100) {
       throw new Error("The NFT minimum purchase value needs to be between 0 and 100.");
     }
+    //TODO: AddKey regex
   };
   async apply({ asset, stateStore, reducerHandler, transaction }) {
     // 4.verify if sender has enough balance
@@ -45,6 +54,8 @@ class CreateNFTAsset extends BaseAsset {
     // 5.create nft
     const nftToken = createNFTToken({
       name: asset.name,
+      key: asset.key,
+      image: asset.image,
       ownerAddress: senderAddress,
       nonce: transaction.nonce,
       value: asset.initValue,

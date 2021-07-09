@@ -33,9 +33,8 @@ export const purchaseNFTToken = async ({
   networkIdentifier,
   minFeePerByte,
 }) => {
-  const { publicKey } = cryptography.getPrivateAndPublicKeyFromPassphrase(
-    passphrase
-  );
+  const { publicKey } =
+    cryptography.getPrivateAndPublicKeyFromPassphrase(passphrase);
   const address = cryptography.getAddressFromPassphrase(passphrase);
   const {
     sequence: { nonce },

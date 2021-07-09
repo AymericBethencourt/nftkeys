@@ -25,6 +25,8 @@ export default function CreateNFTTokenDialog(props) {
   const classes = useStyles();
   const [data, setData] = useState({
     name: "",
+    image: "",
+    key: "",
     initValue: "",
     minPurchaseMargin: "",
     fee: "",
@@ -38,7 +40,7 @@ export default function CreateNFTTokenDialog(props) {
 
   const handleSend = async (event) => {
     event.preventDefault();
-
+    
     const res = await createNFTToken({
       ...data,
       networkIdentifier: nodeInfo.networkIdentifier,
@@ -58,6 +60,20 @@ export default function CreateNFTTokenDialog(props) {
               label="Name"
               value={data.name}
               name="name"
+              onChange={handleChange}
+              fullWidth
+            />
+            <TextField
+              label="Image"
+              value={data.image}
+              name="image"
+              onChange={handleChange}
+              fullWidth
+            />
+            <TextField
+              label="Key"
+              value={data.key}
+              name="key"
               onChange={handleChange}
               fullWidth
             />

@@ -56,6 +56,14 @@ export default function NFTToken(props) {
             <dd>{props.item.id}</dd>
           </li>
           <li>
+            <dt>Image</dt>
+            <dd>{props.item.image}</dd>
+          </li>
+          <li>
+            <dt>Key</dt>
+            <dd>{props.item.key}</dd>
+          </li>
+          <li>
             <dt>Token value</dt>
             <dd>{transactions.convertBeddowsToLSK(props.item.value)}</dd>
           </li>
