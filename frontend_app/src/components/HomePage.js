@@ -17,7 +17,7 @@ function HomePage() {
     <Fragment>
       <Grid container spacing={4}>
         {NFTAccounts.map((item) => (
-          <Grid item md={4}>
+          <Grid item md={2}>
             <Game item={item} key={item.id} />
           </Grid>
         ))}

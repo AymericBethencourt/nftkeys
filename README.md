@@ -1,6 +1,6 @@
 # NFTKeys
 
-Tis is my submission to the Lisk Hackathon.
+This is my submission to the Lisk Hackathon.
 
 To run it:
 
