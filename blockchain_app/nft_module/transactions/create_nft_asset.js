@@ -14,7 +14,7 @@ class CreateNFTAsset extends BaseAsset {
   schema = {
     $id: "lisk/nft/create",
     type: "object",
-    required: ["minPurchaseMargin", "initValue", "name", "key", "image"],
+    required: ["minPurchaseMargin", "initValue", "name", "image", "key"],
     properties: {
       minPurchaseMargin: {
         dataType: "uint32",
@@ -28,11 +28,11 @@ class CreateNFTAsset extends BaseAsset {
         dataType: "string",
         fieldNumber: 3,
       },
-      key: {
+      image: {
         dataType: "string",
         fieldNumber: 4,
       },
-      image: {
+      key: {
         dataType: "string",
         fieldNumber: 5,
       },
@@ -54,8 +54,8 @@ class CreateNFTAsset extends BaseAsset {
     // 5.create nft
     const nftToken = createNFTToken({
       name: asset.name,
-      key: asset.key,
       image: asset.image,
+      key: asset.key,
       ownerAddress: senderAddress,
       nonce: transaction.nonce,
       value: asset.initValue,

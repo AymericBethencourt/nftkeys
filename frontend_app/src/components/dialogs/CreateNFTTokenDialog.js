@@ -53,46 +53,46 @@ export default function CreateNFTTokenDialog(props) {
   return (
     <Fragment>
       <Dialog open={props.open} onBackdropClick={props.handleClose}>
-        <DialogTitle id="alert-dialog-title">{"Create NFT"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Create NFT Key"}</DialogTitle>
         <DialogContent>
           <form className={classes.root} noValidate autoComplete="off">
             <TextField
-              label="Name"
+              label="Game Name"
               value={data.name}
               name="name"
               onChange={handleChange}
               fullWidth
             />
             <TextField
-              label="Image"
+              label="Game Image"
               value={data.image}
               name="image"
               onChange={handleChange}
               fullWidth
             />
             <TextField
-              label="Key"
+              label="Game Key"
               value={data.key}
               name="key"
               onChange={handleChange}
               fullWidth
             />
             <TextField
-              label="Initial Token value"
+              label="Price"
               value={data.initValue}
               name="initValue"
               onChange={handleChange}
               fullWidth
             />
             <TextField
-              label="Minimum Purchase Margin (0 - 100)"
+              label="Margin (0 - 100)"
               value={data.minPurchaseMargin}
               name="minPurchaseMargin"
               onChange={handleChange}
               fullWidth
             />
             <TextField
-              label="Fee"
+              label="Network Fee"
               value={data.fee}
               name="fee"
               onChange={handleChange}
@@ -108,7 +108,7 @@ export default function CreateNFTTokenDialog(props) {
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSend}>Create NFT</Button>
+          <Button onClick={handleSend}>Create NFT Key</Button>
         </DialogActions>
       </Dialog>
     </Fragment>

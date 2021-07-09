@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import NFTToken from "./NFTToken";
+import Game from "./Game";
 import { Grid } from "@material-ui/core";
 import { fetchAllNFTTokens } from "../api";
 
@@ -18,7 +18,7 @@ function HomePage() {
       <Grid container spacing={4}>
         {NFTAccounts.map((item) => (
           <Grid item md={4}>
-            <NFTToken item={item} key={item.id} />
+            <Game item={item} key={item.id} />
           </Grid>
         ))}
       </Grid>
